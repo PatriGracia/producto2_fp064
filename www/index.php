@@ -8,11 +8,13 @@
     <body>
         <div class="container-fluid">
             <?php
-                echo "<h1>¡Hola, Antonio te da la bienvenida!</h1>";
+                echo "<h1>¡Hola, grupo PSMD te da la bienvenida!</h1>";
 
-                $conn = mysqli_connect('db', 'root', 'test', "dbname");
+                //$conn = mysqli_connect('db', 'root', 'test', "dbname");
+                
+                $conn = mysqli_connect('db', 'root', 'test', "wordpress3");
 
-                $query = 'SELECT * From Person';
+                /*$query = 'SELECT * From Person';
                 $result = mysqli_query($conn, $query);
 
                 echo '<table class="table table-striped">';
@@ -28,7 +30,7 @@
                 }
                 echo '</table>';
 
-                $result->close();
+                $result->close();*/
                 mysqli_close($conn);
             ?>
         </div>
