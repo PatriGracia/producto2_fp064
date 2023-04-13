@@ -5,10 +5,12 @@
     //Get prev & next month
     if (isset($_GET['ym'])) {
         $ym = $_GET['ym'];
+
     } else {
         //This month
         $ym = date('Y-m');
     }
+    
 
     //Check format
     $timestamp = strtotime($ym . '-01'); //the first day of the month
@@ -24,8 +26,12 @@
     $title = date('F, Y', $timestamp);
 
     //Create prev & next month link
-    $prev = date('Y-m', strtotime('-1 month', $timestamp));
-    $next = date('Y-m', strtotime('+1 month', $timestamp));
+    $ym_prev = date_create($ym);
+    $ym_next = date_create($ym);
+    $sub_ym_get = date_sub($ym_prev, date_interval_create_from_date_string("1 month"));
+    $prev = date_format($sub_ym_get, "Y-m");
+    $add_ym_get = date_add($ym_next, date_interval_create_from_date_string("1 month"));
+    $next = date_format($add_ym_get, "Y-m");
 
     //Number of days in the month
     $day_count = date('t', $timestamp);
@@ -106,11 +112,15 @@
 <body>
     <div class="container">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="?ym=<? $prev; ?>" class="btn btn-link">&lt; prev</a></li>
+            <?php
+            echo "<a href='?ym=$prev'>Prev</a>";
+            ?>
             <li class="list-inline-item"><span class="title"><?php echo $title ?></span></li>
-            <li class="list-inline-item"><a href="?ym=<? $next; ?>" class="btn btn-link">next &gt;</a></li>
+            <?php
+            echo "<a href='?ym=$next'>Next</a>";
+            ?>
         </ul>
-        <p class="text-right"><a href="calendar/calendar.php">Today</a></p>
+        <p class="text-right"><a href="panel_usuario.php">Today</a></p>
         <table class="table table-bordered">
             <thead>
                 <tr>
