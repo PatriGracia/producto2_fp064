@@ -40,16 +40,18 @@
     $str = date('N', $timestamp);
 
     //Array for calendar
-    $weeks = [];
-    $week = [];
+    $weeks = array();
+    $week = ' ';
 
     //Add empty cell(s)
     $week .= str_repeat('<td></td>', $str - 1);
+    
 
     for ($day = 1; $day <= $day_count; $day++, $str++) {
         $date = $ym . '-' . $day;
+        
         if ($today == $date) {
-            $week .= '<td class="today">';
+            $week .= '<td class="today" style="background-color: pink;">';
         } else {
             $week .= '<td>';
         }
@@ -66,6 +68,7 @@
             $week = '';
         } 
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -102,9 +105,6 @@
         th:nth-of-type(7), td:nth-of-type(7) {
             color: red;
         }
-        .today{
-            background-color: pink;
-        }
     </style>
 
 </head>
@@ -138,6 +138,7 @@
                     foreach($weeks as $week) {
                         echo $week;
                     }
+                    
                 ?>
             </tbody>
         </table>
