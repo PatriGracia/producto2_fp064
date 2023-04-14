@@ -78,33 +78,9 @@
     <title>PHP Calendar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="calendar/calendar.css">
     <style>
-        .container{
-            font-family: 'Nunito', sans-serif;
-            margin-top: 80px auto;
-        }
-        .list-inline{
-            text-align:center;
-            margin-bottom: 30px;
-        }
-        .title{
-            font-weight: bold;
-            font-size: 26px;
-        }
-        th{
-            height: 30px;
-            text-align: center;
-            font-weight:700;
-        }
-        td{
-            height:100px;
-        }
-        th:nth-of-type(6), td:nth-of-type(6) {
-            color: red;
-        }
-        th:nth-of-type(7), td:nth-of-type(7) {
-            color: red;
-        }
+        
     </style>
 
 </head>
@@ -113,14 +89,14 @@
     <div class="container">
         <ul class="list-inline">
             <?php
-            echo "<a href='?ym=$prev'>Prev</a>";
+            echo "<a class='navigation' href='?ym=$prev'>Prev</a>";
             ?>
             <li class="list-inline-item"><span class="title"><?php echo $title ?></span></li>
             <?php
-            echo "<a href='?ym=$next'>Next</a>";
+            echo "<a class='navigation' href='?ym=$next'>Next</a>";
             ?>
         </ul>
-        <p class="text-right"><a href="panel_usuario.php">Today</a></p>
+        <p class="text-right"><a class='navigation' href="panel_usuario.php">Today</a></p>
         <table class="table table-bordered">
             <thead>
                 <tr>
