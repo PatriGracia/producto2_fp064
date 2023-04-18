@@ -1,3 +1,7 @@
+<?php
+    require_once 'db_connection.php';
+?>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Welcome to LAMP Infrastructure</title>
@@ -64,7 +68,8 @@
 
                     echo '</tr>';
                 }
-                echo '</table>';
+                echo
+                '</table>';
 
                 $result->close();*/
                 mysqli_close($conn);
