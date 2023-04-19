@@ -26,15 +26,15 @@
             <div class="superior-cuerpo">
                 <div class="conferencias">
                     <h3 style="color:rgb(31, 36, 171);"> Conferencias de tu especialidad con los mejores profesionales a escala global. Idiomas: español, inglés, alemán, chino y árabe. </h3>
-                    <img class="imagen" src="../assets/conferencia.jpg"> 
+                    <img class="imagen" src="./assets/conferencia.jpg"> 
                 </div>
                 <div class="seminarios">
                     <h3 style="color:darkorange;"> Los mejores seminarios de tu especialidad 100% online. Se un profesional imparable. </h3>
-                    <img class="imagen" src="../assets/seminario.jpg"> 
+                    <img class="imagen" src="./assets/seminario.jpg"> 
                 </div>
                 <div class="mesa-redonda">
                     <h3 style="color:rgb(11, 151, 11);"> Participa en alguna mesa redonda de debate presencialmente o desde casa.</h3>
-                    <img class="imagen" src="../assets/mesa-redonda.jpg"> 
+                    <img class="imagen" src="./assets/mesa-redonda.jpg"> 
                 </div>
             </div>
             <div>
