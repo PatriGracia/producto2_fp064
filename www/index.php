@@ -45,14 +45,14 @@
 
         </div>
     
-        <!-- 
+<!--         
         <div class="container-fluid">
             <?php
-                echo "<h1>¡Hola, grupo PSMD te da la bienvenida!</h1>";
+                //echo "<h1>¡Hola, grupo PSMD te da la bienvenida!</h1>";
 
                 //$conn = mysqli_connect('db', 'root', 'test', "dbname");
                 
-                $conn = mysqli_connect('db', 'root', 'test', "Eventos");
+                //$conn = mysqli_connect('db', 'root', 'test', "Eventos");
 
                 /*$query = 'SELECT * From Person';
                 $result = mysqli_query($conn, $query);
@@ -72,7 +72,7 @@
                 '</table>';
 
                 $result->close();*/
-                mysqli_close($conn);
+                //mysqli_close($conn);
             ?>
         </div>
         -->
