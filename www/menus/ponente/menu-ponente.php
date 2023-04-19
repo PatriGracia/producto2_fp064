@@ -1,5 +1,6 @@
 <?php
     require_once 'db_connection.php';
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -22,4 +23,3 @@
         </div>
     </body>
     </html>
-?>

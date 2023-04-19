@@ -52,7 +52,7 @@
 
                 //$conn = mysqli_connect('db', 'root', 'test', "dbname");
                 
-                $conn = mysqli_connect('db', 'root', 'test', "wordpress3");
+                $conn = mysqli_connect('db', 'root', 'test', "Eventos");
 
                 /*$query = 'SELECT * From Person';
                 $result = mysqli_query($conn, $query);
