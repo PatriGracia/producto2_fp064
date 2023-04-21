@@ -10,7 +10,7 @@
 <div align="center">
 <?php
 require ("calendar/calendar.php");
-
+require ("agenda/index.php");
 ?>
 </div>
 </body>
