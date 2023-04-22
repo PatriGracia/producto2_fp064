@@ -18,8 +18,9 @@
             </div>
             
             <div class="botones"> 
-                <button class="boton registro"> Registro </button> 
-                <button class="boton acceso" > Acceso </button> 
+                <button class="boton registro" onclick="window.location.href='registro.php'"> Registro </button> 
+                <button class="boton acceso" onclick="window.location.href='login.php'"> Acceso </button> 
+                <a href="registro.php"> Registro </a> 
             </div>
         </div>
         <div class="cuerpo">

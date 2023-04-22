@@ -6,6 +6,8 @@
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
+    $tipo_usuario; 
+
     // Consultar el usuario en la base de datos
     $query = "SELECT * FROM usuarios WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
@@ -29,4 +31,7 @@
     }
 
     mysqli_close($conn);
+
+    
+
 ?>

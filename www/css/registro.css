@@ -1,3 +1,9 @@
+.contenedor-registro{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 70px;
+}
 body {
     margin:0;
     padding:0 0;
