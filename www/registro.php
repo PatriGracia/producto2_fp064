@@ -1,6 +1,15 @@
 <?php
-
-?> 
+if (isset($_GET['error'])) {
+    $error_code = $_GET['error'];
+    if ($error_code == 1) {
+        echo "<p class='error-msg'>Hubo un error al ejecutar la sentencia de inserción en la tabla Personas.</p>";
+    } elseif ($error_code == 2) {
+        echo "<p class='error-msg'>Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</p>";
+    } elseif ($error_code == 3) {
+        echo "<p class='error-msg'>Hubo un error al ejecutar la sentencia de inserción en la tabla Usuarios.</p>";
+    }
+}
+?>
 
 <style>
 .contenedor-registro{
@@ -48,6 +57,11 @@ input{
 }
 .button-registro{
     align-item: center;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
 }
 
 </style>  
