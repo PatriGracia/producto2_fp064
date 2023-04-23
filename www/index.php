@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="/css/index.css">
     </head>
     <body>
         <div class="container-fluid">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-4 col-sm-12 seminarios image-container">
                     <div class="content-wrapper">
-                        <h3 class="text-warning text-justified text-aligned"> Los mejores seminarios de tu especialidad 100% online. Se un profesional imparable. </h3>
+                        <h3 class="text-warning text-justified text-aligned"> Los mejores seminarios de tu especialidad 100% online. Se un profesional imparable.</h3>
                         <img class="img-fluid" src="/assets/seminario.jpg">
                     </div>
                 </div>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h1 class="text-danger"> <strong>Regístrate ya para poder participar en todos estos eventos que harán que despegues en tu carrera profesional </strong></h1>
+                    <h1 class="text-danger"> <strong>Regístrate ya para poder participar en todos estos eventos que harán que despegues en tu carrera profesional.</strong></h1>
                 </div>
             </div>
         </div>

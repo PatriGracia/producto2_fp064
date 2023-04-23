@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Administrador</title>
-    <link rel="stylesheet" href="./propiedades-comundes.css">
+    <link rel="stylesheet" href="/css/propiedades-comunes.css">
     <link rel="stylesheet" href="menu-administrador.css">
 </head>
 <body>
