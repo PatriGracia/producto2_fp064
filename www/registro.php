@@ -58,6 +58,7 @@ input{
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registrate</title>
+        <link rel="stylesheet" href="index.css">
         
     </head>
     <body>
@@ -65,6 +66,7 @@ input{
             <div>
                 <h3 style="color:cadetblue;"> <strong>Grupo PSMD </strong></h3>
                 <h4 class="nombre-proyecto"> Gestión de Eventos </h4>
+                <button class="boton inicio" onclick="window.location.href='index.php'"> Home </button>
             </div>
             
             <div class="botones"> 
