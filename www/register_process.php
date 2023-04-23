@@ -1,48 +1,74 @@
 <?php
-// Conexión a la base de datos
-require_once 'db_connection.php';
+    // Conexión a la base de datos
+    include "db_connection.php";
+    $conn = conexion();
 
-// Recuperar y validar los datos del formulario
-$name = trim($_POST['name']);
-$apellido1 = trim($_POST['apellido1']);
-$apellido2 = trim($_POST['apellido2']);
-$username = trim($_POST['username']);
-$password = trim($_POST['password']);
-$password_confirm = trim($_POST['password_confirm']);
+    // Recuperar y validar los datos del formulario
+    $nombre = trim($_POST['nombre']);
+    $apellido1 = trim($_POST['apellido1']);
+    $apellido2 = trim($_POST['apellido2']);
+    $password = trim($_POST['password']);
+    $username = trim ($_POST['username']);
+    $password_confirm = trim($_POST['password_confirm']);
 
-// Asignar el Id_tipo_usuario para el tipo "Usuario"
-$id_tipo_usuario = 2; // Reemplaza el 2 por el Id_tipo_usuario correspondiente al tipo "Usuario" en tu tabla Tipos_usuarios
+    if ($password === $password_confirm) {
+        // Encriptar la contraseña
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-if ($password === $password_confirm) {
-    // Encriptar la contraseña
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $usuarios_totales = usuariosTotales()+1; 
 
-    // Insertar la persona en la tabla Personas
-    $query = "INSERT INTO Personas (Nombre, Apellido1, Apellido2) VALUES ('$name', '$apellido1', '$apellido2')";
-    $result = mysqli_query($conn, $query);
+        // Insertar el usuario en la base de datos
+        $query1 = "INSERT INTO Personas ( Nombre, Apellido1, Apellido2) VALUES ('$nombre', '$apellido1', '$apellido2')";
+        $result1 = mysqli_query($conn, $query1);
 
-    if ($result) {
-        // Obtener el Id_persona recién creado
-        $id_persona = mysqli_insert_id($conn);
-
-        // Insertar el usuario en la base de datos con el tipo de usuario predeterminado
-        $query = "INSERT INTO Usuarios (Username, Password, Id_tipo_usuario, Id_persona) VALUES ('$username', '$hashed_password', $id_tipo_usuario, $id_persona)";
-        $result = mysqli_query($conn, $query);
-        if ($result) {
-            // Redirigir a la página de inicio de sesión con éxito
-            header('Location: login.php?success=1');
+        if($conn->query($query1)) {
+            echo "<p>Usuario insertado con éxito</p>";
         } else {
-            // Error al insertar el usuario
-            header('Location: register.php?error=1');
+            echo "<p>Hubo un error al ejecutar la sentencia de inserción: {$conn->error}</p>";
         }
-    } else {
-        // Error al insertar la persona
-        header('Location: register.php?error=3');
-    }
+
+
+        $query2 = "INSERT INTO Usuarios (Username, Password)   VALUES ('$username', '$password')";
+        
+        if($conn->query($query2)) {
+            echo "<p>Registro insertado con éxito</p>";
+        } else {
+            echo "<p>Hubo un error al ejecutar la sentencia de inserción: {$conn->error}</p>";
+        }
+
     } else {
         // Las contraseñas no coinciden
         header('Location: register.php?error=2');
     }
-    
-    mysqli_close($conn);
-    ?>
+
+    $conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrando</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<div class="header">
+            <div>
+                <h3 style="color:cadetblue;"> <strong>Grupo PSMD </strong></h3>
+                <h4 class="nombre-proyecto"> Gestión de Eventos </h4>
+                <button class="boton inicio" onclick="window.location.href='index.php'"> Home </button>
+            </div>
+            
+            <div class="botones"> 
+                <button class="boton registro" onclick="window.location.href='registro.php'"> Registro </button> 
+                <button class="boton acceso" onclick="window.location.href='login.php'"> Acceso </button> 
+            </div>
+        </div>
+<div class="registrando">
+    <p> Accede a tu panel desde acceso </p> 
+</div>
+</body>
+</html>
