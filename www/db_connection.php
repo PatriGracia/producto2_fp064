@@ -1,6 +1,6 @@
 <?php
     // Configuración de la conexión a la base de datos
-    $servername = "localhost";
+    $servername = "db";
     $username = "root";
     $password = "test";
     $dbname = "Eventos";
