@@ -22,11 +22,11 @@ if ($result && mysqli_num_rows($result) > 0) {
         // Verificar el tipo de usuario y redirigir a la página correspondiente
         $tipo_usuario = $user['TipoUsuario'];
         if ($tipo_usuario == 'Administrador') {
-            header('Location: menu-administrador.php');
+            header('Location: menus/administrador/menu-administrador.php');
         } elseif ($tipo_usuario == 'Usuario') {
-            header('Location: menu-usuario.php');
+            header('Location: menus/usuario/menu-usuario.php');
         } elseif ($tipo_usuario == 'Ponente') {
-            header('Location: menu-ponente.php');
+            header('Location: menus/ponente/menu-ponente.php');
         } else {
             // Tipo de usuario desconocido
             header('Location: login.php?error=3');

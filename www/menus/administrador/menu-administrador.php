@@ -5,7 +5,7 @@
         exit;
     }
 
-    require_once 'db_connection.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
