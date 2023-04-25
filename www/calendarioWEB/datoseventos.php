@@ -20,11 +20,15 @@ switch($_GET['accion']){
         break;
 
     case 'agregar';
-        /*"INSERT INTO Tipo_acto (Descripcion) VALUES ('$_POST[Descripcion]')";
-        $descripcion = "SELECT Id_tipo_acto FROM Tipo_acto WHERE Descripcion = '$_POST[Descripcion]'";
-        "INSERT INTO Actos (Fecha, Hora, Titulo, Descripcion_corta, Descripcion_larga, Num_asistentes, Id_tipo_acto) VALUES
-            ('$_POST[Fecha]', '$_POST[Hora]', '$_POST[Titulo]', '$_POST[Descripcion_corta]', '$_POST[Descripcion_larga]',
-            '$_POST[Num_asistentes]',  '$descripcion')";*/
+        $res = mysqli_query($conn, "INSERT INTO Tipo_acto (Descripcion) VALUES ('$_POST[Descripcion]')");
+        $id_tipo_acto_query = mysqli_query($conn, "SELECT Id_tipo_acto FROM Tipo_acto WHERE Descripcion = '$_POST[Descripcion]'");
+        $id_tipo_acto = mysqli_fetch_assoc($id_tipo_acto_query);
+        $id = $id_tipo_acto["Id_tipo_acto"];
+        $respuesta = mysqli_query($conn, "INSERT INTO Actos (Fecha, Hora, Titulo, Descripcion_corta, Descripcion_larga, Num_asistentes, Id_tipo_acto) VALUES
+            ('$_POST[Fecha]', '$_POST[HoraInicio]', '$_POST[Titulo]', '$_POST[Descripcion_corta]', '$_POST[Descripcion_larga]',
+            '$_POST[Num_asistentes]',  '$id')");
+        
+        echo json_encode($respuesta);
         break;
        
     case 'modificar';

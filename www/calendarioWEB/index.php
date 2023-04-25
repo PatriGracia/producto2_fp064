@@ -11,6 +11,7 @@
   <!-- Scripts CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/datatables.min.css">
+    <link rel="stylesheet" href="css/bootstrap-clockpicker.css">
 
   <!-- Scripts JS -->
     <script src="js/jquery-3.6.4.min.js"></script>
@@ -44,6 +45,12 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="">Tipo de Acto (Ponencia, Seminario, Debate, Otro) :</label>
+                            <div class="input-group" data-autoclose="true">
+                                <input type="text" id="Descripcion" class="form-control">
+                            </div>
+                        </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha:</label>
                             <div class="input-group" data-autoclose="true">
@@ -53,7 +60,7 @@
                         <div class="form-group col-md-6" id="TituloHoraInicio">
                             <label for="">Hora de inicio:</label>
                             <div class="input-group clockpicker" data-autoclose="true">
-                                <input type="text" id="HoraInicio" class="form-control" autocomplete="off">
+                                <input type="text" id="HoraInicio" class="form-control" value="">
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -87,6 +94,8 @@
     </div>
 
     <script>
+        $('.clockpicker').clockpicker();
+
         let calendario1 = new FullCalendar.Calendar(document.getElementById('Calendario1'), {
             events: 'datoseventos.php?accion=listar',
             headerToolbar: {
@@ -95,13 +104,73 @@
                 right:'dayGridMonth,timeGridWeek,timeGridDay'
             },
             dateClick: function(info){
-                //alert(info.dateStr);
+                limpiarFormulario();
+                $('#BotonAgregar').show();
+                $('#BotonModificar').hide();
+                $('#BotonBorrar').hide();
+
+                if(info.allDay){
+                    $('#Fecha').val(info.dateStr);
+                }else{
+                    /*let fechaHora = info.dateStr.split("T");
+                    $('#Fecha').val(fechaHora[0]);
+                    $('#HoraInicio').val(fechaHora[1].substring(0,5));*/
+                }
+
                 $("#FormularioEventos").modal('show');
             }
 
         });
 
         calendario1.render();
+
+        //Eventos de botones de la aplicacion
+        $('#BotonAgregar').click(function(){
+            let registro = recuperarDatosFormulario();
+            agregarRegistro(registro);
+            $('#FormularioEventos').modal('hide');
+        });
+
+        //Funciones que interactual con el servidor AJAX!
+        function agregarRegistro(registro){
+            alert(registro);
+            $.ajax({
+                type: 'POST',
+                url: 'datoseventos.php?accion=agregar',
+                data: registro,
+                success: function(msg){
+                    calendario1.refetchEvents();
+                },
+                error: function(error) {
+                    alert("Error al agregar evento: " + error);
+                }
+            })
+        }
+
+        //funciones que interactuan con el forulario Eventos
+
+        function limpiarFormulario(){
+            $('#Titulo').val('');
+            $('#Descripcion').val('');
+            $('#Fecha').val('');
+            $('#HoraInicio').val('');
+            $('#Descripcion_corta').val('');
+            $('#Descripcion_larga').val('');
+            $('#Num_asistentes').val('');
+        }
+
+        function recuperarDatosFormulario(){
+            let registro = {
+                Titulo: $('#Titulo').val(),
+                Descripcion: $('#Descripcion').val(),
+                Fecha: $('#Fecha').val(),
+                HoraInicio: $('#HoraInicio').val(),
+                Descripcion_corta: $('#Descripcion_corta').val(),
+                Descripcion_larga: $('#Descripcion_larga').val(),
+                Num_asistentes: $('#Num_asistentes').val()
+            }
+            return registro;
+        }
     </script>
 </body>
 </html>
