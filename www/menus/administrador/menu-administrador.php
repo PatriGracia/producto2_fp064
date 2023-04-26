@@ -6,6 +6,8 @@
     }
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
+
+    $conn = conexion();
 ?>
 <!DOCTYPE html>
 <html lang="en">

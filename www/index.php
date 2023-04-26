@@ -1,5 +1,7 @@
-<?php
-    require_once 'db_connection.php';
+<?php //creo que no es necesario llamar a la bbdd
+      require_once("db_connection.php");
+
+      $conn = conexion();
 ?>
 <!DOCTYPE html>
 <html>
