@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/propiedades-comundes.css">
+    <link rel="stylesheet" href="../propiedades-comundes.css">
     <!-- Scripts CSS -->
     <link rel="stylesheet" href="../../calendarioWEB/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../calendarioWEB/css/datatables.min.css">
@@ -45,6 +47,8 @@
     <script src="../../calendarioWEB/fullcalendar/index.global.js"></script>
 </head>
 <body>
+
+    <!-- HEADER --> 
     <div class="container-fluid">
         <div class="row align-items-center header">
             <div class="col">
@@ -52,6 +56,7 @@
                 <h4 class="nombre-proyecto">Gestión de Eventos - Panel de Administración</h4>
             </div>
             <div class="col-auto d-flex">
+                <button class="btn btn-danger log-out" id="logoutButton">Perfil</button>
                 <button class="btn btn-primary log-out" id="logoutButton">Log Out</button>
             </div>
         </div>
@@ -68,11 +73,8 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById("logoutButton").addEventListener("click", function() {
-            window.location.href = "/logout.php";
-        });
-    </script><div class="col-md-8 offset-md-2" id="Calendario1" style="margin-top: 5px"></div>
+
+    <div class="col-md-8 offset-md-2" id="Calendario1" style="margin-top: 5px"></div>
     <!-- Formulario de eventos -->
     <div class="modal fade" id="FormularioEventos" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -238,8 +240,6 @@
             window.location.href = "/logout.php";
         });
     </script>
-
-
 
 </body>
 </html>

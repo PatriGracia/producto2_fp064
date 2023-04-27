@@ -2,6 +2,9 @@
 // Conexión a la base de datos
 require_once 'db_connection.php';
 
+#include 'db_conection.php';
+$conn = conexion();
+
 // Recuperar y validar los datos del formulario
 $name = trim($_POST['name']);
 $apellido1 = trim($_POST['apellido1']);
