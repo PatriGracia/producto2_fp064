@@ -35,8 +35,9 @@
                 <h2>Administración de eventos</h2>
                 <p>Aquí puedes gestionar los eventos, ponentes, tipos de eventos y asistentes.</p>
                 <div class="menu-admin">
+                <a href="inscribir_actos.php" class="d-block py-2">Inscribirse en actos</a>
                     <a href="admin/eventos.php" class="btn btn-primary boton-admin">Gestionar eventos</a>
-                    <a href="admin/ponentes.php" class="btn btn-primary boton-admin">Gestionar ponentes</a>
+                    <a href="ponentes.php" class="btn btn-primary boton-admin">Gestionar ponentes</a>
                     <a href="admin/tipos_eventos.php" class="btn btn-primary boton-admin">Gestionar tipos de eventos</a>
                     <a href="admin/asistentes.php" class="btn btn-primary boton-admin">Gestionar asistentes</a>
                 </div>
