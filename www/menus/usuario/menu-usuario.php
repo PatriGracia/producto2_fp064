@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="../../calendarioWEB/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../calendarioWEB/css/datatables.min.css">
     <link rel="stylesheet" href="../../calendarioWEB/css/bootstrap-clockpicker.css">
+    <link rel="stylesheet" href="menu-usuario.css">
 
   <!-- Scripts JS -->
     <script src="../../calendarioWEB/js/jquery-3.6.4.min.js"></script>
@@ -44,6 +45,7 @@
     <script src="../../calendarioWEB/js/bootstrap-clockpicker.js"></script>
     <script src="../../calendarioWEB/js/moment-with-locales.min.js"></script>
     <script src="../../calendarioWEB/fullcalendar/index.global.js"></script>
+    <script src="../../calendarioWEB/fullcalendar/es.global.js"></script>
     
 </head>
 <body>
@@ -74,19 +76,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="Id" class="form-control" placeholder="">
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="">Titulo del evento: </label>
                             <input type="text" id="Titulo" class="form-control" placeholder="">
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row"> 
                         <div class="form-group col-md-12">
-                            <label for="">Tipo de Acto (Ponencia, Seminario, Debate, Otro) :</label>
+                            <label for="">ID del acto: </label>
                             <div class="input-group" data-autoclose="true">
-                                <input type="text" id="Descripcion" class="form-control">
+                                <input type="number" id="Id_acto" class="form-control">
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group col-md-6">
                             <label for="">Fecha:</label>
                             <div class="input-group" data-autoclose="true">
@@ -114,9 +117,16 @@
                         <div class="form-group col-md-6">
                             <label for="">Numero de asistentes:</label>
                             <div class="input-group" data-autoclose="true">
-                                <input type="number" id="Num_asistentes" min="0" class="form-control">
+                                <input type="text" id="Num_asistentes" min="0" class="form-control">
                             </div>
                         </div>
+                    </div>
+                    <!-- Collapse -->
+                    <div> 
+                        <button class="readMore_btn" id="hideText_btn">Lista de Ponentes</button>
+                        <span class="hide" id="hideText">
+                            <p id="textPonentes"></p>
+                        </span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -133,62 +143,117 @@
         $('.clockpicker').clockpicker();
 
         let calendario1 = new FullCalendar.Calendar(document.getElementById('Calendario1'), {
-            lang: 'es',
+            locale: 'es',
             eventSources: [{
                 url: 'datoseventos.php?accion=listar',
-                color: '#FFFFFF',
-                textColor: '#000000'
+                textColor: '#000000',
+                color: '#FFFFFF'
             },
             {
                 url: 'datoseventos.php?accion=listarActosInscrito',
-                color: '#8BE4EE',
-                textColor: '#000000'
+                textColor: '#000000',
+                color: '#8BE4EE'
             },
             {
                 url: 'datoseventos.php?accion=listarActosPonente',
-                color: '#FEB776',
-                textColor: '#000000'
+                textColor: '#000000',
+                color: '#FEB776'
             }],
+
             headerToolbar: {
                 left:'prev,next today',
                 center: 'title',
                 right:'dayGridMonth,timeGridWeek,timeGridDay'
             },
             height: 700,
-            dateClick: function(info){
-                limpiarFormulario();
-                $('#BotonAgregar').show();
+            
+            eventClick: function(info) {
+                $('#BotonAgregar').hide();
                 $('#BotonModificar').hide();
                 $('#BotonBorrar').hide();
-
-                if(info.allDay){
-                    $('#Fecha').val(info.dateStr);
-                }else{
-                    /*let fechaHora = info.dateStr.split("T");
-                    $('#Fecha').val(fechaHora[0]);
-                    $('#HoraInicio').val(fechaHora[1].substring(0,5));*/
-                }
-
-                $("#FormularioEventos").modal('show');
+                $('#hideText_btn').show();
+                $('#Id_acto').val(info.event.id);
+                $('#Titulo').val(info.event.title);
+                //$('#Descripcion').val(info.event.Descripcion);
+                //$('#Fecha').val(moment(info.event.start).format("YYYY-MM-DD"));
+                $('#Fecha').val(String(info.event.Fecha));
+                $('#HoraInicio').val(moment(info.event.start).format("HH:mm"));
+                //$('#HoraInicio').val(info.event.extendedProps.HoraInicio);
+                $('#Descripcion_corta').val(info.event.extendedProps.Descripcion_corta);
+                $('#Descripcion_larga').val(info.event.extendedProps.Descripcion_larga);
+                $('#Num_asistentes').val(info.event._def.Num_asistentes);
+                
+                
+                //$("#FormularioEventos").modal('show');
+                window.open('infoevento.php?info='+info.event.id, '_self');
             }
 
         });
 
         calendario1.render();
 
+       /*$('#FormularioEventos').on('show.bs.modal', function (info) {
+            /*const
+            const Titulo = $('#Titulo').val();
+            const Descripcion_corta = $('#Descripcion_corta').val();
+            const Descripcion_larga = $('#Descripcion_larga').val();
+            if (!id) {
+                event.preventDefault();
+                alert('Por favor, ingrese el ID del ponente.');
+            } else {
+                $.ajax({
+                    url: 'get_ponente.php',
+                    method: 'POST',
+                    data: { id: id },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data) {
+                            $('#modify_id').val(data.id);
+                            $('#modify_username').val(data.username);
+                            $('#modify_nombre').val(data.nombre);
+                            $('#modify_apellido1').val(data.apellido1);
+                            $('#modify_apellido2').val(data.apellido2);
+                        } else {
+                            event.preventDefault();
+                            alert('No se encontró el ponente con el ID proporcionado.');
+                        }
+                    },
+                    error: function () {
+                        event.preventDefault();
+                        alert('Error al obtener datos del ponente.');
+                    }
+                });
+            }*/
+        //});
+
         //Eventos de botones de la aplicacion
-        $('#BotonAgregar').click(function(){
+        /*$('#BotonAgregar').click(function(){
             let registro = recuperarDatosFormulario();
             agregarRegistro(registro);
             $('#FormularioEventos').modal('hide');
+        });*/
+
+        let hideText_btn = document.getElementById('hideText_btn');
+        let hideText = document.getElementById('hideText');
+        hideText_btn.addEventListener('click', toggleText);
+
+        function toggleText() {
+            hideText.classList.toggle('show');
+            //funcion para mostrar ponentes
+        }
+
+        $('#hideText_btn').click(function(){
+            let registro = recuperarDatosFormulario();
+            listarPonentes(registro);
+            $('#FormularioEventos').modal('show');
         });
 
         //Funciones que interactual con el servidor AJAX!
-        function agregarRegistro(registro){
-            alert(registro);
+       /* function listarPonentes(registro){
+            //alert(registro);
             $.ajax({
                 type: 'POST',
-                url: 'datoseventos.php?accion=agregar',
+                url: 'datoseventos.php?accion=listarPonentes',
                 data: registro,
                 success: function(msg){
                     calendario1.refetchEvents();
@@ -198,6 +263,35 @@
                 }
             })
         }
+        function recogerNum(info){
+            //alert(registro);
+            $.ajax({
+                type: 'POST',
+                url: 'datoseventos.php?accion=recogerNumAsistentes',
+                data: registro,
+                success: function(msg){
+                    calendario1.refetchEvents();
+                },
+                error: function(error) {
+                    alert("Error al recoger num evento: " + error);
+                }
+            })
+        }
+
+        /*function infoRegistro(registro){
+            //alert(registro);
+            $.ajax({
+                type: 'POST',
+                url: 'datoseventos.php?accion=infoRegistro',
+                data: registro,
+                success: function(msg){
+                    calendario1.refetchEvents();
+                },
+                error: function(error) {
+                    alert("Error al mostrar info evento: " + error);
+                }
+            })
+        }*/
 
         //funciones que interactuan con el forulario Eventos
 
@@ -213,6 +307,7 @@
 
         function recuperarDatosFormulario(){
             let registro = {
+                Id: $('#Id').val(),
                 Titulo: $('#Titulo').val(),
                 Descripcion: $('#Descripcion').val(),
                 Fecha: $('#Fecha').val(),
@@ -223,6 +318,7 @@
             }
             return registro;
         }
+        
     </script>
     <script>
         document.getElementById("logoutButton").addEventListener("click", function() {
