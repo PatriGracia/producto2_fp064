@@ -9,6 +9,12 @@ $user_id = $_SESSION['user_id'];
 require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
 $conn = conexion();
 
+
+$count = 0;
+
+$inscribir = true;
+$desinscribir = false;
+
 $id = $_GET['info'];
 if (isset($_GET['info'])) {
     $id = $_GET['info'];
@@ -25,13 +31,9 @@ if (isset($_GET['info'])) {
     $result2 = $conn->query($sql2);
 
     //Query comprobar inscrito en acto
-    $sql3 = mysqli_query($conn, "SELECT Id_acto FROM Actos WHERE Id_acto IN (SELECT b.id_acto FROM Inscritos b, Personas c WHERE b.Id_persona = $user_id);");
-    $result3 = mysqli_fetch_assoc($sql3);
-    if(isset($result3['Id_acto'])){
-        $id_query = $result3["Id_acto"];
-    }else{
-        $id_query = NULL;
-    };
+    $sql3 = "SELECT Id_acto as id FROM Actos WHERE Id_acto IN (SELECT b.id_acto FROM Inscritos b, Personas c WHERE b.Id_persona = $user_id);";
+
+    $result3 = $conn->query($sql3);
     
 
 }else{
@@ -63,11 +65,13 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Te has inscrito correctamente.');
+                        window.location='menu-usuario.php';
                     },
                     error: function () {
                         alert('Error al inscribir.');
                     }
                 });
+            
         };
         function desinscribir(){
             const id_a = <?php echo $id; ?>;
@@ -78,11 +82,13 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Ya no estás inscrito en este acto');
+                        window.location='menu-usuario.php';
                     },
                     error: function () {
                         alert('Error al desinscribir.');
                     }
                 });
+            
         };
 
     </script>        
@@ -153,16 +159,29 @@ if (isset($_GET['info'])) {
             </div>
         </div>
         <div class="footer">
-            <?php
-                if ($id != $id_query) {
+            <?php 
+                if ($result3->num_rows > 0) {
+                    while($row = mysqli_fetch_all($result3, MYSQLI_ASSOC)) {   
+                        for($count = 0; $count < sizeof($row); $count++){
+                            if($id == $row[$count]['id']){
+                                $desinscribir = true;
+                            }       
+                        }
+                        if($desinscribir){
             ?>
-                    <button type='button' class='btn btn-outline-secondary' id="BotonInscribir" onclick="inscribir()">Inscribirse</button>
-            <?php       
+                            <button type='button' class='btn btn-outline-secondary' id='BotonDesinscribir' onclick="desinscribir()">Desinscribirse</button>
+            <?php
+                        }else{
+            ?>
+                            <button type='button' class='btn btn-outline-secondary' id="BotonInscribir" onclick="inscribir()">Inscribirse</button>
+                            
+            <?php
+                        }
+                    }
                 } else {
-            ?>
-                    <button type='button' class='btn btn-outline-secondary' id='BotonDesinscribir' onclick="desinscribir()">Desinscribirse</button>
-            <?php
+                    echo "<tr><td colspan='5'>No se encontraron ponentes</td></tr>";
                 }
+                
             ?>
         </div>
     </div>
