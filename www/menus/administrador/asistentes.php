@@ -78,8 +78,8 @@ $result = $conn->query($sql);
 </script>
 </head>
 <body>
-   <!-- HEADER --> 
-   <div class="container-fluid">
+<!-- HEADER --> 
+<div class="container-fluid">
         <div class="row align-items-center header">
             <div class="col">
                 <h3 style="color:cadetblue;"><strong>Grupo PSMD</strong></h3>
