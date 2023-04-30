@@ -14,6 +14,7 @@ $result = $conn->query($sql);
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/css/propiedades-comundes.css">
 <style>
     .container {
         margin-top: 30px;
@@ -83,18 +84,34 @@ $result = $conn->query($sql);
     });
 </script>
 </head>
-<body>
-    <div class="container-fluid">
+<body><div class="container-fluid">
         <div class="row align-items-center header">
             <div class="col">
-                <h3 class="text-primary"> <strong>Grupo PSMD </strong></h3>
-                <h4 class="nombre-proyecto"> Gestión de Eventos </h4>
+                <h3 style="color:cadetblue;"><strong>Grupo PSMD</strong></h3>
+                <h4 class="nombre-proyecto">Gestión de Eventos - Panel de Administración</h4>
             </div>
             <div class="col-auto d-flex">
-                <a href="menu-administrador.php" class="btn btn-secondary mr-2">Volver atrás</a>
-                <a href="../../logout.php" class="btn btn-secondary">Cerrar sesión</a>
+                <button class="btn btn-danger" id="perfil">Perfil</button>
+                <button class="btn btn-primary log-out" id="logoutButton">Log Out</button>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Administración de eventos</h2>
+                <p>Aquí puedes gestionar los eventos, ponentes, tipos de eventos y asistentes.</p>
+                <div class="menu-admin">
+                
+                    <a href="eventos.php" class="btn btn-primary boton-admin">Gestionar eventos</a>
+                    <a href="ponentes.php" class="btn btn-primary boton-admin">Gestionar ponentes</a>
+                    <a href="tipos_eventos.php" class="btn btn-secondary boton-admin">Gestionar tipos de eventos</a>
+                    <a href="asistentes.php" class="btn btn-primary boton-admin">Gestionar asistentes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
         <div class="container">
             <h1 class="text-center">Gestión de Tipos de Eventos</h1>
             <div class="row">
@@ -216,5 +233,17 @@ $result = $conn->query($sql);
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            window.location.href = "/logout.php";
+        });
+    </script>
+    <script>
+        document.getElementById("perfil").addEventListener("click", function() {
+            window.location.href = "../perfil.php";
+        });
+    </script>
+
 </body>
 </html>

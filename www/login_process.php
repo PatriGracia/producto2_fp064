@@ -24,7 +24,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         // Verificar el tipo de usuario y redirigir a la página correspondiente
         $tipo_usuario = $user['TipoUsuario'];
         if ($tipo_usuario == 'Administrador') {
-            header('Location: menus/administrador/menu-administrador.php');
+            header('Location: menus/administrador/eventos.php');
         } elseif ($tipo_usuario == 'Usuario') {
             header('Location: menus/usuario/menu-usuario.php');
         } elseif ($tipo_usuario == 'Ponente') {
