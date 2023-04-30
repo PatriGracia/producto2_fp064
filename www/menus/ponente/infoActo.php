@@ -65,7 +65,7 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Te has inscrito correctamente.');
-                        window.location='menu-usuario.php';
+                        window.location='menu-ponente.php';
                     },
                     error: function () {
                         alert('Error al inscribir.');
@@ -82,7 +82,7 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Ya no estás inscrito en este acto');
-                        window.location='menu-usuario.php';
+                        window.location='menu-ponente.php';
                     },
                     error: function () {
                         alert('Error al desinscribir.');
@@ -100,7 +100,7 @@ if (isset($_GET['info'])) {
                 <h4 class="nombre-proyecto"> Gestión de Eventos </h4>
             </div>
             <div class="col-auto d-flex">
-                <a href="menu-usuario.php" class="btn btn-secondary mr-2">Volver atrás</a>
+                <a href="menu-ponente.php" class="btn btn-secondary mr-2">Volver atrás</a>
                 <a href="../../logout.php" class="btn btn-secondary">Cerrar sesión</a>
             </div>
         </div> 
