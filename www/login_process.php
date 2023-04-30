@@ -1,6 +1,8 @@
 <?php
 // Conexión a la base de datos
-require_once 'db_connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
+
+$conn = conexion();
 
 // Recuperar y validar los datos del formulario
 $username = trim($_POST['username']);
@@ -22,7 +24,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         // Verificar el tipo de usuario y redirigir a la página correspondiente
         $tipo_usuario = $user['TipoUsuario'];
         if ($tipo_usuario == 'Administrador') {
-            header('Location: menus/administrador/menu-administrador.php');
+            header('Location: menus/administrador/eventos.php');
         } elseif ($tipo_usuario == 'Usuario') {
             header('Location: menus/usuario/menu-usuario.php');
         } elseif ($tipo_usuario == 'Ponente') {

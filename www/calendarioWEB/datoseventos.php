@@ -1,7 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
-require("../db_connection.php");
+require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
+
+    $conn = conexion();
 
 switch($_GET['accion']){
     case 'listar':

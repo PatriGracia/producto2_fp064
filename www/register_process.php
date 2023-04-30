@@ -1,6 +1,7 @@
 <?php
 // Conexión a la base de datos
-require_once 'db_connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
+$conn = conexion();
 
 // Recuperar y validar los datos del formulario
 $name = trim($_POST['name']);
