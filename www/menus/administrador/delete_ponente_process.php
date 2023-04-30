@@ -3,7 +3,6 @@ require_once '../../db_connection.php';
 
 $id = $_POST['id'];
 
-// Obtener el Id_Persona antes de eliminar el registro en Usuarios
 $sql = "SELECT Id_Persona FROM Usuarios WHERE Id_usuario = $id AND Id_tipo_usuario = 3";
 $result = $conn->query($sql);
 $id_persona = -1;
@@ -16,7 +15,6 @@ if ($result && $result->num_rows > 0) {
     exit();
 }
 
-// Eliminar el registro en la tabla Usuarios
 $sql = "DELETE FROM Usuarios WHERE Id_usuario = $id AND Id_tipo_usuario = 3";
 $result = $conn->query($sql);
 
@@ -25,7 +23,6 @@ if (!$result) {
     exit();
 }
 
-// Eliminar el registro en la tabla Personas
 $sql = "DELETE FROM Personas WHERE Id_persona = $id_persona";
 $result = $conn->query($sql);
 

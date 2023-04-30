@@ -6,8 +6,6 @@
     }
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
-
-    $conn = conexion();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +38,7 @@
                 <a href="inscribir_actos.php" class="d-block py-2">Inscribirse en actos</a>
                     <a href="admin/eventos.php" class="btn btn-primary boton-admin">Gestionar eventos</a>
                     <a href="ponentes.php" class="btn btn-primary boton-admin">Gestionar ponentes</a>
-                    <a href="admin/tipos_eventos.php" class="btn btn-primary boton-admin">Gestionar tipos de eventos</a>
+                    <a href="tipos_eventos.php" class="btn btn-primary boton-admin">Gestionar tipos de eventos</a>
                     <a href="admin/asistentes.php" class="btn btn-primary boton-admin">Gestionar asistentes</a>
                 </div>
             </div>
