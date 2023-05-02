@@ -21,7 +21,7 @@
     $user_name = $user['Nombre'];
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,7 +80,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span araia-hidden="true">x</span>
                     </button>
                 </div>
@@ -93,10 +93,17 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="">Tipo de Acto (Ponencia, Seminario, Debate, Otro) :</label>
-                            <div class="input-group" data-autoclose="true">
-                                <input type="text" id="Descripcion" class="form-control">
-                            </div>
+                        <label for="">Tipo de Acto (Ponencia, Seminario, Debate, Otro) :</label>
+                            <select id="Id_tipo_acto" class="form-control">
+                                <?php
+                                $tipo_acto_query = $conn->prepare("SELECT Id_tipo_acto, Descripcion FROM Tipo_acto");
+                                $tipo_acto_query->execute();
+                                $result_tipo_acto = $tipo_acto_query->get_result();
+                                while ($tipo_acto = $result_tipo_acto->fetch_assoc()) {
+                                    echo '<option value="' . $tipo_acto['Id_tipo_acto'] . '">' . $tipo_acto['Descripcion'] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Fecha:</label>
@@ -144,7 +151,8 @@
         $('.clockpicker').clockpicker();
 
         let calendario1 = new FullCalendar.Calendar(document.getElementById('Calendario1'), {
-            lang: 'es',
+            locale: 'es',
+            defaultTimedEventDuration: '01:00:00',
             eventSources: [{
                 url: 'datoseventos.php?accion=listar',
                 color: '#FFFFFF',
@@ -195,20 +203,22 @@
         });
 
         //Funciones que interactual con el servidor AJAX!
-        function agregarRegistro(registro){
-            alert(registro);
+        function agregarRegistro(registro) {
             $.ajax({
                 type: 'POST',
                 url: 'datoseventos.php?accion=agregar',
                 data: registro,
-                success: function(msg){
+                success: function (msg) {
                     calendario1.refetchEvents();
+                    // Mostrar un mensaje de éxito
+                    alert('El evento se ha creado correctamente.');
                 },
-                error: function(error) {
+                error: function (error) {
                     alert("Error al agregar evento: " + error);
-                }
-            })
+                },
+            });
         }
+
 
         //funciones que interactuan con el forulario Eventos
 
@@ -225,12 +235,12 @@
         function recuperarDatosFormulario(){
             let registro = {
                 Titulo: $('#Titulo').val(),
-                Descripcion: $('#Descripcion').val(),
                 Fecha: $('#Fecha').val(),
                 HoraInicio: $('#HoraInicio').val(),
                 Descripcion_corta: $('#Descripcion_corta').val(),
                 Descripcion_larga: $('#Descripcion_larga').val(),
-                Num_asistentes: $('#Num_asistentes').val()
+                Num_asistentes: $('#Num_asistentes').val(),
+                Id_tipo_acto: $('#Id_tipo_acto').val()
             }
             return registro;
         }
