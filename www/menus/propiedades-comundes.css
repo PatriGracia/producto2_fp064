@@ -40,3 +40,10 @@ body {
     width: 10%;
     height: 60vh;
 }
+
+.perfil{
+    background-color: white;
+    display:flex;
+    align-items: center;
+}
+

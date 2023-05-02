@@ -11,14 +11,23 @@
 
     // Obtener el nombre del usuario
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT Personas.Nombre FROM Usuarios INNER JOIN Personas ON Usuarios.Id_Persona = Personas.Id_persona WHERE Usuarios.Id_usuario = $user_id";
-    $result = mysqli_query($conn, $query);
+
+    $sql = "SELECT u.Id_usuario as id, u.Username as username, u.Password as contrasena, p.Nombre as nombre, p.Apellido1 as apellido1, p.Apellido2 as apellido2 
+    FROM Usuarios u 
+    INNER JOIN Personas p ON u.Id_Persona = p.Id_persona 
+    WHERE u.Id_usuario = $user_id";
+
+    $result = $conn->query($sql);
+    
     if (!$result) {
         printf("Error en la consulta: %s\n", mysqli_error($conn));
         exit;
     }
     $user = mysqli_fetch_assoc($result);
-    $user_name = $user['Nombre'];
+    $password = $user["contrasena"];
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +44,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/propiedades-comundes.css">
-    <link rel="stylesheet" href="propiedades-comundes.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/perfil.css">
 </head>
+
 <body>
     <!-- HEADER --> 
     <div class="container-fluid">
@@ -54,13 +64,106 @@
     </div>
 
     <!-- Cuerpo --> 
-    <div class="perfil"> 
-        <p> Usuario: </p> 
-        <p> Correo Electrónico: </p>
-        <p> Contraseña: </p> 
+    <div class="perfil-usuario">
+    <table class="table table-bordered table-striped col-md-3" >
+        <tr>
+            <th>Id suario</th>
+            <td>
+                <?php
+                    print $user_id;
+                ?> 
+            </td>
+        </tr>
+        <tr>
+            <th>Nombre </th>
+            <td>
+                <?php
+                    echo $user["nombre"];
+                ?> 
+            </td>
+        </tr>
+        <tr>
+            <th>Apellido 1 </th>
+            <td>
+                <?php
+                    echo $user["apellido1"];
+                ?> 
+            </td>
+        </tr>
+        <tr>
+            <th>Apellido 2 </th>
+            <td>
+                <?php
+                    echo $user["apellido2"];
+                ?> 
+            </td>
+        </tr>
+        <tr>
+            <th>Usuername </th>
+            <td>
+                <?php
+                    echo $user["username"];
+                ?> 
+            </td>
+        </tr>
+        <tr>
+            <th>Contraseña</th>
+            <td>
+                <?php
+                    echo $hashed_password;
+                ?>
+
+            </td>
+        </tr>
+    </table>
+    <div class="botones" >
+        <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificarUsuario">
+                Modificar Usuario
+            </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Modificar Contraseña</button>
+    </div>
+
+    
+
+    <!-- Modal ModificarUsuario-->
+    <div class="modal fade" id="modificarUsuario" tabindex="-1" aria-labelledby="modificarUsuarioModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modificarUsuarioModal">Modificar Usuario</h1>
+            </div>
+            <div class="modal-body">
+                    <form action="modificar_usuario.php" method="POST">
+                        <div class="form-group">
+                            <label for="modify_username">Username:</label>
+                            <input type="text" class="form-control" id="modify_username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modify_nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="modify_nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modify_apellido1">Apellido 1:</label>
+                            <input type="text" class="form-control" id="modify_apellido1" name="apellido1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modify_apellido2">Apellido 2:</label>
+                            <input type="text" class="form-control" id="modify_apellido2" name="apellido2" required>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-warning">Modificar Ponente</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
 
 
-    </div> 
+
+
 
 
 
@@ -78,6 +181,6 @@
             window.history.back();
         });
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 </html>
