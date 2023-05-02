@@ -30,7 +30,9 @@ if (isset($_GET['info'])) {
 
     $result2 = $conn->query($sql2);
 
-    $sql4 = "SELECT p.Nombre as nombre, p.Apellido1 as apellido1, p.Apellido2 as apellido2 FROM Personas p WHERE p.Id_persona IN (SELECT i.Id_persona FROM Inscritos i, Actos a WHERE i.Id_acto = $id);";
+    //Query para mostrar lista de asistentes
+
+    $sql4 = "SELECT p.Nombre as nombreInscrito, p.Apellido1 as apellido1Inscrito, p.Apellido2 as apellido2Inscrito FROM Personas p WHERE p.Id_persona IN (SELECT i.Id_persona FROM Inscritos i, Actos a WHERE i.Id_acto = $id);";
 
     $result4 = $conn->query($sql4);
 
@@ -156,6 +158,22 @@ if (isset($_GET['info'])) {
                             }
                         } else {
                             echo "<tr><td colspan='5'>No se encontraron ponentes</td></tr>";
+                        }
+                    ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2 class="text">Lista de Asistentes</h2>
+                    <ul class="list-group list-group-flush">
+                    <?php 
+                        if ($result4->num_rows > 0) {
+                            while($row = $result4->fetch_assoc()) {   
+                                echo "<li class='list-group-item'>" . $row["nombreInscrito"] . " " . $row["apellido1Inscrito"]. " " . $row["apellido2Inscrito"] ."</li>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No se encontraron asistentes</td></tr>";
                         }
                     ?>
                     </ul>
