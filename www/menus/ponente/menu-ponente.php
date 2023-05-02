@@ -158,5 +158,11 @@
             window.location.href = "/logout.php";
         });
     </script>
+
+    <script>
+        document.getElementById("perfil").addEventListener("click", function() {
+            window.location.href = "../perfil.php";
+        });
+    </script>
 </body>
 </html>
