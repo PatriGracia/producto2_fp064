@@ -30,16 +30,16 @@ if (isset($_GET['info'])) {
 
     $result2 = $conn->query($sql2);
 
+    //Query comprobar inscrito en acto
+    $sql3 = "SELECT Id_acto as id FROM Actos WHERE Id_acto IN (SELECT b.id_acto FROM Inscritos b, Personas c WHERE b.Id_persona = $user_id);";
+
+    $result3 = $conn->query($sql3);
+
     //Query para mostrar lista de asistentes
 
     $sql4 = "SELECT p.Nombre as nombreInscrito, p.Apellido1 as apellido1Inscrito, p.Apellido2 as apellido2Inscrito FROM Personas p WHERE p.Id_persona IN (SELECT i.Id_persona FROM Inscritos i, Actos a WHERE i.Id_acto = $id);";
 
     $result4 = $conn->query($sql4);
-
-    //Query comprobar inscrito en acto
-    $sql3 = "SELECT Id_acto as id FROM Actos WHERE Id_acto IN (SELECT b.id_acto FROM Inscritos b, Personas c WHERE b.Id_persona = $user_id);";
-
-    $result3 = $conn->query($sql3);
     
 
 }else{
@@ -164,7 +164,7 @@ if (isset($_GET['info'])) {
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" style="margin-left: 10px;">
                     <h2 class="text">Lista de Asistentes</h2>
                     <ul class="list-group list-group-flush">
                     <?php 
