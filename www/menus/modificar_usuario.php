@@ -1,18 +1,23 @@
-
 <?php
 
+header('Content-Type: application/json');
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/db_connection.php';
+
+$conn = conexion();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = conexion();
+    $user_id = intval($_POST['user_id']);
     $nombre = $_POST['nombre'];
     $username = $_POST['username'];
     $apellido1 = $_POST['apellido1'];
     $apellido2 = $_POST['apellido2'];
 
-    $sql1 = "UPDATE Personas SET Nombre = '$nombre', Apellido1 = '$apellido1', Apellido2 = '$apellido2' WHERE Id_persona = $user_id";
+    $sql1 = "UPDATE Personas SET Nombre = '$nombre', Apellido1 = '$apellido1', Apellido2 = '$apellido2' WHERE Id_Persona = $user_id";
     $result1 = $conn->query($sql1);
 
-    $sql2 = "UPDATE Usuarios SET Username = '$username' WHERE Id_persona = $user_id";
-    $result2 = $conn->query($sql);
+    $sql2 = "UPDATE Usuarios SET Username = '$username' WHERE Id_usuario = $user_id";
+    $result2 = $conn->query($sql2);
 
     $sql3 = "SELECT u.Id_usuario as id, u.Username as username, u.Password as contrasena, p.Nombre as nombre, p.Apellido1 as apellido1, p.Apellido2 as apellido2 
     FROM Usuarios u 
@@ -29,5 +34,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $conn->close();
 }
-
 ?>

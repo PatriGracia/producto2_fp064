@@ -31,7 +31,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -136,6 +136,7 @@
             <div class="modal-body">
                     <form action="modificar_usuario.php" method="POST">
                         <div class="form-group">
+                            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                             <label for="modify_username">Username:</label>
                             <input type="text" class="form-control" id="modify_username" name="username" required>
                         </div>
@@ -154,7 +155,7 @@
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-warning">Modificar Ponente</button>
+                            <button type="submit" class="btn btn-warning">Modificar Usuario</button>
                         </div>
                     </form>
             </div>

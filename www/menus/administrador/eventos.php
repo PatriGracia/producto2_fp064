@@ -47,8 +47,6 @@
     <script src="../../calendarioWEB/fullcalendar/index.global.js"></script>
 </head>
 <body>
-
-    <!-- HEADER --> 
     <div class="container-fluid">
         <div class="row align-items-center header">
             <div class="col">
@@ -141,11 +139,33 @@
                     <button type="button" id="BotonAgregar" class="btn btn-sucess">Agregar</button>
                     <button type="button" id="BotonModificar" class="btn btn-sucess">Modificar</button>
                     <button type="button" id="BotonBorrar" class="btn btn-sucess">Borrar</button>
-                    <button type="button" class="btn btn-sucess" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sucess" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Confirmación modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas realizar esta acción?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmButton">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         $('.clockpicker').clockpicker();
@@ -234,6 +254,7 @@
 
         function recuperarDatosFormulario(){
             let registro = {
+                id: eventoSeleccionado.id,
                 Titulo: $('#Titulo').val(),
                 Fecha: $('#Fecha').val(),
                 HoraInicio: $('#HoraInicio').val(),
@@ -243,6 +264,79 @@
                 Id_tipo_acto: $('#Id_tipo_acto').val()
             }
             return registro;
+        }
+
+        let eventoSeleccionado;
+        let eventoInfo;
+
+        calendario1.on('eventClick', function(info) {
+            info.jsEvent.preventDefault();
+            let evento = info.event;
+            eventoInfo = info;
+            eventoSeleccionado = info.event;
+
+            $('#Titulo').val(evento.title);
+            $('#Fecha').val(moment(evento.start).format('YYYY-MM-DD'));
+            $('#HoraInicio').val(moment(evento.start).format('HH:mm'));
+            $('#BotonAgregar').hide();
+            $('#BotonModificar').show();
+            $('#BotonBorrar').show();
+
+            $("#FormularioEventos").modal('show');
+        });
+
+        $('#BotonModificar').click(function () {
+            $("#FormularioEventos").modal('hide');
+            $("#confirmModal").modal('show');
+            $('#confirmButton').data('action', 'modify');
+        });
+
+        $('#BotonBorrar').click(function () {
+            $("#FormularioEventos").modal('hide');
+            $("#confirmModal").modal('show');
+            $('#confirmButton').data('action', 'delete');
+        });
+
+        $('#confirmButton').click(function () {
+            let action = $(this).data('action');
+            if (action == 'modify') {
+                let registro = recuperarDatosFormulario();
+                modificarRegistro(registro);
+            } else if (action == 'delete') {
+                let eventId = eventoInfo.event.id;
+                borrarRegistro(eventId);
+            }
+            $("#confirmModal").modal('hide');
+        });
+
+        function modificarRegistro(registro) {
+            $.ajax({
+                type: 'POST',
+                url: 'datoseventos.php?accion=modificar',
+                data: registro,
+                success: function(msg) {
+                    calendario1.refetchEvents();
+                    alert('El evento se ha modificado correctamente.');
+                },
+                error: function(error) {
+                    alert("Error al modificar evento: " + error);
+                },
+            });
+        }
+
+        function borrarRegistro(eventId) {
+            $.ajax({
+                type: 'POST',
+                url: 'datoseventos.php?accion=borrar',
+                data: { id: eventId },
+                success: function(msg) {
+                    calendario1.refetchEvents();
+                    alert('El evento se ha eliminado correctamente.');
+                },
+                error: function(error) {
+                    alert("Error al eliminar evento: " + error);
+                },
+            });
         }
     </script>
     <script>
