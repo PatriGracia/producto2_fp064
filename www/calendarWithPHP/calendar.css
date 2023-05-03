@@ -1,0 +1,41 @@
+.container{
+    font-family: 'Nunito', sans-serif;
+    margin-top: 80px auto;
+}
+a{
+    font-family: 'Nunito', sans-serif;
+    padding-inline: 30px;
+}
+
+a:link{
+    color: black;
+}
+a:visited{
+    color: black;
+}
+a:hover{
+    color:hotpink;
+}
+
+.list-inline{
+    text-align:center;
+    margin-bottom: 30px;
+}
+.title{
+    font-weight: bold;
+    font-size: 26px;
+}
+th{
+    height: 30px;
+    text-align: center;
+    font-weight:700;
+}
+td{
+    height:100px;
+}
+th:nth-of-type(6), td:nth-of-type(6) {
+    color: red;
+}
+th:nth-of-type(7), td:nth-of-type(7) {
+    color: red;
+}
