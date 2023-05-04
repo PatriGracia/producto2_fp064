@@ -78,7 +78,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span araia-hidden="true">x</span>
                     </button>
                 </div>
@@ -139,7 +139,7 @@
                     <button type="button" id="BotonAgregar" class="btn btn-sucess">Agregar</button>
                     <button type="button" id="BotonModificar" class="btn btn-sucess">Modificar</button>
                     <button type="button" id="BotonBorrar" class="btn btn-sucess">Borrar</button>
-                    <button type="button" class="btn btn-sucess" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sucess" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -151,7 +151,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -159,7 +159,7 @@
                     ¿Estás seguro de que deseas realizar esta acción?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="confirmButton">Continuar</button>
                 </div>
             </div>
