@@ -63,10 +63,10 @@
                 <h2>Administración de eventos</h2>
                 <p>Aquí puedes gestionar los eventos, ponentes, tipos de eventos y asistentes.</p>
                 <div class="menu-admin">
-                    <a href="eventos.php" class="btn btn-secondary boton-admin">Gestionar eventos</a>
+                    <a href="eventos.php" class="btn btn-primary boton-admin">Gestionar eventos</a>
                     <a href="ponentes.php" class="btn btn-primary boton-admin">Gestionar ponentes</a>
                     <a href="tipos_eventos.php" class="btn btn-primary boton-admin">Gestionar tipos de eventos</a>
-                    <a href="asistentes.php" class="btn btn-primary boton-admin">Gestionar asistentes</a>
+                    <a href="asistentes.php" class="btn btn-secondary boton-admin">Gestionar asistentes</a>
                 </div>
             </div>
         </div>
@@ -85,6 +85,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <h3>Listado Asistentes</h3>
                     <table class="table" id="tablaAsistentes">
                         <thead>
                             <tr>
@@ -96,6 +97,21 @@
                             </tr>
                         </thead>
                         <tbody id="asistentesList">
+                            <!-- Contenido generado dinámicamente -->
+                        </tbody>
+                    </table>
+                    <h3>Listado no inscritos</h3>
+                    <table class="table" id="tablaUsuarios">
+                        <thead>
+                            <tr>
+                                <th scope="col">#ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido1</th>
+                                <th scope="col">Apellido2</th>
+                                <!--<th scope="col">Acciones</th>-->
+                            </tr>
+                        </thead>
+                        <tbody id="usuariosList">
                             <!-- Contenido generado dinámicamente -->
                         </tbody>
                     </table>
@@ -243,6 +259,7 @@
 
             // Cargar asistentes del evento
             cargarAsistentes(eventoSeleccionado.id);
+            cargarUsuarios(eventoSeleccionado.id);
 
             $("#AsistentesModal").modal('show');
         });
@@ -292,14 +309,59 @@
             });
         }
 
+        function cargarUsuarios(eventoId) {
+            $.ajax({
+                type: 'POST',
+                url: 'datosasistentes.php?accion=listar_usuarios',
+                data: { eventoId: eventoId },
+                success: function (data) {
+                    //let asistentes = JSON.parse(data);
+                    //let asistentesList = document.getElementById('asistentesList');
+                    //asistentesList.innerHTML = '';
+                    console.log(data);
+                    $.each(data, function(index, item){
+                        $('#usuariosList').append('<tr><td>' +item.Id_persona + '</td><td>' + item.Nombre + '</td><td>' + item.Apellido1 + '</td><td>' + item.Apellido2 + '</td></tr>');
+                    });
+                    /*asistentes.forEach(asistente => {
+                        let tr = document.createElement('tr');
+                        let tdNombre = document.createElement('td');
+                        let tdEmail = document.createElement('td');
+                        let tdAcciones = document.createElement('td');
+                        let btnEliminar = document.createElement('button');
+
+                        tdNombre.textContent = asistente.Nombre;
+                        tdEmail.textContent = asistente.Email;
+                        btnEliminar.textContent = 'Eliminar';
+                        btnEliminar.className = 'btn btn-danger btn-sm';
+                        btnEliminar.addEventListener('click', function() {
+                            eliminarAsistente(asistente.Id, eventoSeleccionado.id);
+                        });
+
+                        tdAcciones.appendChild(btnEliminar);
+                        tr.appendChild(tdNombre);
+                        tr.appendChild(tdEmail);
+                        tr.appendChild(tdAcciones);
+                        asistentesList.appendChild(tr);
+
+                    });*/
+
+                    //document.getElementById('numAsistentes').value = asistentes.length;
+                },
+                error: function(error) {
+                    alert("Error al cargar asistentes: " + error);
+                },
+            });
+        }
+
         function agregarAsistente(asistenteId, eventoId) {
             $.ajax({
                 type: 'POST',
                 url: 'datosasistentes.php?accion=agregar_inscrito',
                 data: { asistenteId: asistenteId, eventoId: eventoId },
                 success: function(msg) {
-                    cargarAsistentes(eventoId);
+                    //cargarAsistentes(eventoId);
                     alert('El asistente se ha añadido correctamente.');
+                    window.location='asistentes.php';
                 },
                 error: function(error) {
                     alert("Error al agregar asistente: " + error);
@@ -313,7 +375,7 @@
                 url: 'datosasistentes.php?accion=eliminar_inscrito',
                 data: { asistenteId: asistenteId, eventoId: eventoId },
                 success: function(msg) {
-                    cargarAsistentes(eventoId);
+                    //cargarAsistentes(eventoId);
                     alert('El asistente se ha eliminado correctamente.');
                 },
                 error: function(error) {

@@ -7,11 +7,12 @@ $conn = conexion();
 
 switch ($_GET['accion']) {
     case 'agregar_inscrito':
+        $fecha_actual = date("Y-m-d");
         $stmt = $conn->prepare("INSERT INTO Inscritos (Id_persona, id_acto, Fecha_inscripcion) VALUES (?, ?, ?)");
-        $stmt->bind_param("iis", $_POST['Id_persona'], $_POST['id_acto'], $_POST['Fecha_inscripcion']);
+        $stmt->bind_param("iis", $_POST['asistenteId'], $_POST['eventoId'], $fecha_actual);
         $respuesta = $stmt->execute();
 
-        echo json_encode(['success' => $respuesta]);
+        echo json_encode([$respuesta]);
         break;
 
     case 'eliminar_inscrito':
@@ -41,12 +42,14 @@ switch ($_GET['accion']) {
 
     
     case 'listar_usuarios':
-        $stmt = $conn->prepare("SELECT * FROM Usuarios");
+        //USUARIO NO INSCRITOS 
+        $stmt = $conn->prepare("SELECT p.Id_persona, p.Nombre, p.Apellido1, p.Apellido2 FROM Personas p WHERE p.Id_persona NOT IN (SELECT i.Id_persona FROM Inscritos i, Actos a WHERE i.Id_acto = ?)");
+        $stmt->bind_param('i', $_POST['eventoId']);
         $stmt->execute();
         $result = $stmt->get_result();
         $usuarios = $result->fetch_all(MYSQLI_ASSOC);
 
-        echo json_encode(['success' => true, 'usuarios' => $usuarios]);
+        echo json_encode($usuarios);
         break;
 }
 ?>
