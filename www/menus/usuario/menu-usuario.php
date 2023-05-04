@@ -59,7 +59,7 @@
                 <h1 style="color:rgb(136, 136, 183);">¡Bienvenido/a <?php echo $user_name; ?>! </h1>
             </div>
             <div class="col-auto d-flex">
-                <button id="perfil" class="btn btn-danger perfil"> Perfil </button> 
+                <button id="perfil" class="btn btn-primary perfil"> Perfil </button> 
                 <button id="logoutButton" class="btn btn-primary log-out"> Log Out </button>
             </div>
         </div>

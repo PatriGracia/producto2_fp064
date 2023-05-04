@@ -34,12 +34,6 @@ if (isset($_GET['info'])) {
     $sql3 = "SELECT Id_acto as id FROM Actos WHERE Id_acto IN (SELECT b.id_acto FROM Inscritos b, Personas c WHERE b.Id_persona = $user_id);";
 
     $result3 = $conn->query($sql3);
-
-    //Query para mostrar lista de asistentes
-
-    $sql4 = "SELECT p.Nombre as nombreInscrito, p.Apellido1 as apellido1Inscrito, p.Apellido2 as apellido2Inscrito FROM Personas p WHERE p.Id_persona IN (SELECT i.Id_persona FROM Inscritos i, Actos a WHERE i.Id_acto = $id);";
-
-    $result4 = $conn->query($sql4);
     
 
 }else{
@@ -71,7 +65,7 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Te has inscrito correctamente.');
-                        window.location='menu-usuario.php';
+                        window.location='menu-ponente.php';
                     },
                     error: function () {
                         alert('Error al inscribir.');
@@ -88,7 +82,7 @@ if (isset($_GET['info'])) {
                     dataType: 'json',
                     success: function (msg) {
                         alert('Ya no estás inscrito en este acto');
-                        window.location='menu-usuario.php';
+                        window.location='menu-ponente.php';
                     },
                     error: function () {
                         alert('Error al desinscribir.');
@@ -106,7 +100,7 @@ if (isset($_GET['info'])) {
                 <h4 class="nombre-proyecto"> Gestión de Eventos </h4>
             </div>
             <div class="col-auto d-flex">
-                <a href="menu-usuario.php" class="btn btn-secondary mr-2">Volver atrás</a>
+                <a href="menu-ponente.php" class="btn btn-secondary mr-2">Volver atrás</a>
                 <a href="../../logout.php" class="btn btn-secondary">Cerrar sesión</a>
             </div>
         </div> 
@@ -158,22 +152,6 @@ if (isset($_GET['info'])) {
                             }
                         } else {
                             echo "<tr><td colspan='5'>No se encontraron ponentes</td></tr>";
-                        }
-                    ?>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col" style="margin-left: 10px;">
-                    <h2 class="text">Lista de Asistentes</h2>
-                    <ul class="list-group list-group-flush">
-                    <?php 
-                        if ($result4->num_rows > 0) {
-                            while($row = $result4->fetch_assoc()) {   
-                                echo "<li class='list-group-item'>" . $row["nombreInscrito"] . " " . $row["apellido1Inscrito"]. " " . $row["apellido2Inscrito"] ."</li>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='5'>No se encontraron asistentes</td></tr>";
                         }
                     ?>
                     </ul>

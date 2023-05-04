@@ -31,7 +31,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -67,7 +67,7 @@
     <div class="perfil-usuario">
     <table class="table table-bordered table-striped col-md-3" >
         <tr>
-            <th>Id suario</th>
+            <th>Id usuario</th>
             <td>
                 <?php
                     print $user_id;
@@ -99,7 +99,7 @@
             </td>
         </tr>
         <tr>
-            <th>Usuername </th>
+            <th>Username </th>
             <td>
                 <?php
                     echo $user["username"];
@@ -121,7 +121,6 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificarUsuario">
                 Modificar Usuario
             </button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Modificar Contraseña</button>
     </div>
 
     
@@ -136,7 +135,6 @@
             <div class="modal-body">
                     <form action="modificar_usuario.php" method="POST">
                         <div class="form-group">
-                            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                             <label for="modify_username">Username:</label>
                             <input type="text" class="form-control" id="modify_username" name="username" required>
                         </div>
@@ -152,11 +150,19 @@
                             <label for="modify_apellido2">Apellido 2:</label>
                             <input type="text" class="form-control" id="modify_apellido2" name="apellido2" required>
                         </div>
+                        <div class="form-group">
+                            <label for="modify_password">Contraseña: </label>
+                            <input type="password" class="form-control" id="modify_password" name="password" required>
                         </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-warning">Modificar Usuario</button>
+                        <div class="form-group">
+                                <label for="password_confirm">Confirmar contraseña:</label>
+                                <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
                         </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-warning">Modificar Usuario</button>
+            </div>
                     </form>
             </div>
         </div>
