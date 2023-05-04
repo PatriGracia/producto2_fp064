@@ -220,7 +220,6 @@
             });
         }
 
-
         //funciones que interactuan con el forulario Eventos
 
         function limpiarFormulario(){
@@ -251,7 +250,6 @@
         let eventoInfo;
 
         calendario1.on('eventClick', function(info) {
-            //info.jsEvent.preventDefault();
             let evento = info.event;
             eventoInfo = info;
             eventoSeleccionado = info.event;
@@ -271,37 +269,12 @@
                 url: 'datosasistentes.php?accion=listar_asistentes',
                 data: { eventoId: eventoId },
                 success: function (data) {
-                    //let asistentes = JSON.parse(data);
-                    //let asistentesList = document.getElementById('asistentesList');
-                    //asistentesList.innerHTML = '';
-                    console.log(data);
+                    $('#asistentesList').empty();
+                    //console.log(data);
                     $.each(data, function(index, item){
-                        $('#asistentesList').append('<tr><td>' +item.Id_persona + '</td><td>' + item.Nombre + '</td><td>' + item.Apellido1 + '</td><td>' + item.Apellido2 + '</td></tr>');
+                        $('#asistentesList').append('<tr><td>' + item.Id_persona + '</td><td>' + item.Nombre + '</td><td>' + item.Apellido1 + '</td><td>' + item.Apellido2 + '</td><td><button class="btn btn-danger eliminarAsistente" data-id="' + item.Id_persona + '">Eliminar</button></td></tr>');
                     });
-                    /*asistentes.forEach(asistente => {
-                        let tr = document.createElement('tr');
-                        let tdNombre = document.createElement('td');
-                        let tdEmail = document.createElement('td');
-                        let tdAcciones = document.createElement('td');
-                        let btnEliminar = document.createElement('button');
-
-                        tdNombre.textContent = asistente.Nombre;
-                        tdEmail.textContent = asistente.Email;
-                        btnEliminar.textContent = 'Eliminar';
-                        btnEliminar.className = 'btn btn-danger btn-sm';
-                        btnEliminar.addEventListener('click', function() {
-                            eliminarAsistente(asistente.Id, eventoSeleccionado.id);
-                        });
-
-                        tdAcciones.appendChild(btnEliminar);
-                        tr.appendChild(tdNombre);
-                        tr.appendChild(tdEmail);
-                        tr.appendChild(tdAcciones);
-                        asistentesList.appendChild(tr);
-
-                    });*/
-
-                    document.getElementById('numAsistentes').value = asistentes.length;
+                    document.getElementById('numAsistentes').value = data.length;
                 },
                 error: function(error) {
                     alert("Error al cargar asistentes: " + error);
@@ -309,43 +282,24 @@
             });
         }
 
+        $('#asistentesList').on('click', '.eliminarAsistente', function() {
+            let Id_persona = $(this).data('id');
+            if (confirm('¿Estás seguro de que deseas eliminar este asistente?')) {
+                eliminarAsistente(Id_persona, eventoSeleccionado.id);
+            }
+        });
+
         function cargarUsuarios(eventoId) {
             $.ajax({
                 type: 'POST',
                 url: 'datosasistentes.php?accion=listar_usuarios',
                 data: { eventoId: eventoId },
                 success: function (data) {
-                    //let asistentes = JSON.parse(data);
-                    //let asistentesList = document.getElementById('asistentesList');
-                    //asistentesList.innerHTML = '';
-                    console.log(data);
+                    $('#usuariosList').empty();
+                    //console.log(data);
                     $.each(data, function(index, item){
                         $('#usuariosList').append('<tr><td>' +item.Id_persona + '</td><td>' + item.Nombre + '</td><td>' + item.Apellido1 + '</td><td>' + item.Apellido2 + '</td></tr>');
                     });
-                    /*asistentes.forEach(asistente => {
-                        let tr = document.createElement('tr');
-                        let tdNombre = document.createElement('td');
-                        let tdEmail = document.createElement('td');
-                        let tdAcciones = document.createElement('td');
-                        let btnEliminar = document.createElement('button');
-
-                        tdNombre.textContent = asistente.Nombre;
-                        tdEmail.textContent = asistente.Email;
-                        btnEliminar.textContent = 'Eliminar';
-                        btnEliminar.className = 'btn btn-danger btn-sm';
-                        btnEliminar.addEventListener('click', function() {
-                            eliminarAsistente(asistente.Id, eventoSeleccionado.id);
-                        });
-
-                        tdAcciones.appendChild(btnEliminar);
-                        tr.appendChild(tdNombre);
-                        tr.appendChild(tdEmail);
-                        tr.appendChild(tdAcciones);
-                        asistentesList.appendChild(tr);
-
-                    });*/
-
-                    //document.getElementById('numAsistentes').value = asistentes.length;
                 },
                 error: function(error) {
                     alert("Error al cargar asistentes: " + error);
@@ -359,7 +313,6 @@
                 url: 'datosasistentes.php?accion=agregar_inscrito',
                 data: { asistenteId: asistenteId, eventoId: eventoId },
                 success: function(msg) {
-                    //cargarAsistentes(eventoId);
                     alert('El asistente se ha añadido correctamente.');
                     window.location='asistentes.php';
                 },
@@ -369,20 +322,36 @@
             });
         }
 
-        function eliminarAsistente(asistenteId, eventoId) {
+        function eliminarAsistente(Id_persona, id_acto) {
             $.ajax({
                 type: 'POST',
                 url: 'datosasistentes.php?accion=eliminar_inscrito',
-                data: { asistenteId: asistenteId, eventoId: eventoId },
+                data: { Id_persona: Id_persona, id_acto: id_acto },
                 success: function(msg) {
-                    //cargarAsistentes(eventoId);
                     alert('El asistente se ha eliminado correctamente.');
+                    cargarAsistentes(eventoSeleccionado.id);
                 },
                 error: function(error) {
                     alert("Error al eliminar asistente: " + error);
                 },
             });
         }
+
+        function actualizarNumAsistentes(numAsistentes, eventoId) {
+            //console.log("Actualizando número de asistentes. Num_asistentes:", numAsistentes, "Id_acto:", eventoId);
+            $.ajax({
+                type: 'POST',
+                url: 'datosasistentes.php?accion=modificar_asistentes',
+                data: { Num_asistentes: numAsistentes, Id_acto: eventoId },
+                success: function(msg) {
+                    alert('El número de asistentes se ha actualizado correctamente.');
+                },
+                error: function(error) {
+                    alert("Error al actualizar número de asistentes: " + error);
+                },
+            });
+        }
+
 
         document.getElementById('addAsistente').addEventListener('click', function() {
             let asistenteId = prompt('Introduce el ID del asistente que quieres añadir:');
@@ -396,19 +365,6 @@
             actualizarNumAsistentes(numAsistentes, eventoSeleccionado.id);
         });
 
-        function actualizarNumAsistentes(numAsistentes, eventoId) {
-            $.ajax({
-                type: 'POST',
-                url: 'datosasistentes.php?accion=modificar_asistentes',
-                data: { numAsistentes: numAsistentes, eventoId: eventoId },
-                success: function(msg) {
-                    alert('El número de asistentes se ha actualizado correctamente.');
-                },
-                error: function(error) {
-                    alert("Error al actualizar número de asistentes: " + error);
-                },
-            });
-        }
     </script>
     <script>
         document.getElementById("logoutButton").addEventListener("click", function() {
