@@ -16,8 +16,8 @@ switch ($_GET['accion']) {
         break;
 
     case 'eliminar_inscrito':
-        $stmt = $conn->prepare("DELETE FROM Inscritos WHERE Id_inscripcion = ?");
-        $stmt->bind_param("i", $_POST['Id_inscripcion']);
+        $stmt = $conn->prepare("DELETE FROM Inscritos WHERE Id_persona = ? AND id_acto = ?");
+        $stmt->bind_param("ii", $_POST['Id_persona'], $_POST['id_acto']);
         $respuesta = $stmt->execute();
 
         echo json_encode(['success' => $respuesta]);
@@ -27,6 +27,8 @@ switch ($_GET['accion']) {
         $stmt = $conn->prepare("UPDATE Actos SET Num_asistentes = ? WHERE Id_acto = ?");
         $stmt->bind_param("ii", $_POST['Num_asistentes'], $_POST['Id_acto']);
         $respuesta = $stmt->execute();
+        error_log("Num_asistentes recibido: " . $_POST['Num_asistentes']);
+        error_log("Id_acto recibido: " . $_POST['Id_acto']);
 
         echo json_encode(['success' => $respuesta]);
         break;

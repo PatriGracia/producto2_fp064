@@ -151,7 +151,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmModalLabel">Confirmación</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -159,7 +159,7 @@
                     ¿Estás seguro de que deseas realizar esta acción?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="confirmButton">Continuar</button>
                 </div>
             </div>
@@ -240,7 +240,7 @@
         }
 
 
-        //funciones que interactuan con el forulario Eventos
+        //funciones que interactuan con el formulario Eventos
 
         function limpiarFormulario(){
             $('#Titulo').val('');
@@ -254,7 +254,7 @@
 
         function recuperarDatosFormulario(){
             let registro = {
-                id: eventoSeleccionado.id,
+                id: eventoSeleccionado ? eventoSeleccionado.id : null,
                 Titulo: $('#Titulo').val(),
                 Fecha: $('#Fecha').val(),
                 HoraInicio: $('#HoraInicio').val(),
